@@ -14,4 +14,3 @@ class Web_Handler_Test(unittest.TestCase):
 
         resp = self.testapp.post('/api', status=500)
         self.assertEqual(resp.body, '{"error": {"message": "error", "code": "UnknowException", "type": "UnknowException"}}')
-        raise Exception('test')

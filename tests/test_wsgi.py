@@ -5,7 +5,7 @@ import datetime
 
 class Test_ApiHandler(ApiHandler):
     def get(self):
-        return self.output({"test":123, "time":datetime.datetime(2014,6,10)})
+        self.output({"test":123, "time":datetime.datetime(2014,6,10)})
 
     def post(self):
         raise Exception('error')
