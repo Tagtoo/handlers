@@ -8,9 +8,9 @@ class ApiHandler(webapp2.RequestHandler):
         callback = self.request.get('callback', None)
 
         if callback:
-            return JsonpResponse(callback, data, self.response)
+            return JsonpResponse(callback=callback, data=data, response=self.response)
         else:
-            return JsonResponse(data, self.response)
+            return JsonResponse(data=data, response=self.response)
 
     def format_exception(self, message, _type, code=None, status=500):
         code = code or _type

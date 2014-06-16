@@ -1,29 +1,28 @@
 import webapp2
 import json
+import datetime
 
 
-class TagtooJsonEncoder(json.JSONEncoder):
-    def default(self, obj, **kwargs):
-        import pdb;pdb.set_trace()
-        print 'TagtooJsonEncoder'
-        if isinstance(obj, (datetime.date, datetime.datetime)):
-            return obj.strftime('%Y-%m-%d %H:%M:%S')
-        elif isinstance(obj, Decimal):
-            return float(obj)
-        else:
-            return json.JSONEncoder.default(self, obj)
+def TagtooJson(obj, *args):
+    if isinstance(obj, (datetime.date, datetime.datetime)):
+        return obj.strftime('%Y-%m-%d %H:%M:%S')
+    elif isinstance(obj, Decimal):
+        return float(obj)
+    else:
+        return json.JSONEncoder.default(self, obj)
 
 
 
-def JsonResponse(data, cls=TagtooJsonEncoder, response=None):
+
+def JsonResponse(data, encoder=TagtooJson, response=None):
     response = response or webapp2.Response()
-    response.write(json.dumps(data))
+    response.write(json.dumps(data, default=encoder))
     response.content_type = 'application/javascript'
     
     return response
     
 
-def JsonpResponse(callback, data, cls=TagtooJsonEncoder, response=None):
+def JsonpResponse(callback, data, encoder=TagtooJson, response=None):
     response = response or webapp2.Response()
     data = json.dumps(data)
     body = '''{}({})'''.format(callback, data)
