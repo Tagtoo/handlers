@@ -1,10 +1,11 @@
 import webapp2, webtest
 from handlers import ApiHandler
 from wsgiref.simple_server import make_server
+import datetime 
 
 class Test_ApiHandler(ApiHandler):
     def get(self):
-        return self.output({"test":123})
+        return self.output({"test":123, "time":datetime.datetime(2014,6,10)})
 
     def post(self):
         raise Exception('error')
