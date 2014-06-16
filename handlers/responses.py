@@ -3,7 +3,8 @@ import json
 
 
 class TagtooJsonEncoder(json.JSONEncoder):
-    def default(self, obj):
+    def default(self, obj, **kwargs):
+        import pdb;pdb.set_trace()
         print 'TagtooJsonEncoder'
         if isinstance(obj, (datetime.date, datetime.datetime)):
             return obj.strftime('%Y-%m-%d %H:%M:%S')
@@ -16,7 +17,7 @@ class TagtooJsonEncoder(json.JSONEncoder):
 
 def JsonResponse(data, cls=TagtooJsonEncoder, response=None):
     response = response or webapp2.Response()
-    response.write(json.dumps(data, cls=cls))
+    response.write(json.dumps(data))
     response.content_type = 'application/javascript'
     
     return response
@@ -24,7 +25,7 @@ def JsonResponse(data, cls=TagtooJsonEncoder, response=None):
 
 def JsonpResponse(callback, data, cls=TagtooJsonEncoder, response=None):
     response = response or webapp2.Response()
-    data = json.dumps(data, cls=cls)
+    data = json.dumps(data)
     body = '''{}({})'''.format(callback, data)
     response.write(body)
     response.content_type = 'text/html'
