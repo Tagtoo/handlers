@@ -4,7 +4,7 @@ from .errors import PermissionDeniedError
 
 class ApiHandler(webapp2.RequestHandler):
     def output(self, data):
-        
+
         callback = self.request.get('callback', None)
 
         if callback:
@@ -12,7 +12,7 @@ class ApiHandler(webapp2.RequestHandler):
         else:
             return JsonResponse(data, self.response)
 
-    def format_exception(self, message, _type, code=None, status=400):
+    def format_exception(self, message, _type, code=None, status=500):
         code = code or _type
 
         data = {
@@ -36,6 +36,7 @@ class ApiHandler(webapp2.RequestHandler):
             return self.format_exception(exception.message, "PermissionDenied")
         else:
             return self.format_exception(exception.message, "UnknowException")
+
 
 
 
