@@ -9,8 +9,7 @@ def TagtooJson(obj, *args):
         return obj.strftime('%Y-%m-%d %H:%M:%S')
     elif isinstance(obj, Decimal):
         return float(obj)
-    else:
-        return json.JSONEncoder.default(self, obj)
+
 
 
 
